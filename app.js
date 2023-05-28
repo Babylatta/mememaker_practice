@@ -12,7 +12,7 @@ ctx.fillRect(200,200,200,20);
 ctx.moveTo(200,200);
 ctx.lineTo(325,100);
 ctx.lineTo(450,200);
-ctx.fill();dfsdf
+ctx.fill();
 
 
 
