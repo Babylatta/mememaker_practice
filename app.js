@@ -3,27 +3,26 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d")
 canvas.width = 800;
 canvas.height= 800;
-
 ctx.lineWidth = 2;
+let isPainting = false;
 
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-    ]
-
-function onClick(event) {
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    ctx.strokeStyle = color;
-    ctx.lineTo(event.offsetX,event.offsetY);
-    ctx.stroke();
-    
+function onMove(event) {
+    if (isPainting) {
+        ctx.lineTo(event.offsetX,event.offsetY);
+        ctx.stroke();
+        return;
+    }
+    ctx.moveTo(event.offsetX, event.offsetY); // 이게 있어야 한붓그리기 안됨..! 새로 찍은곳으로 움직이란 거니까!
 }
 
-canvas.addEventListener("mousemove",onClick);
+function startPainting(){
+    isPainting = true;
+}
+function cancelPainting(){
+    isPainting = false;
+}
+
+canvas.addEventListener("mousemove",onMove);
+canvas.addEventListener("mousedown",startPainting);
+canvas.addEventListener("mouseup",cancelPainting);
+canvas.addEventListener("mouseleave",cancelPainting);
