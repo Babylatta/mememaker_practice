@@ -1,3 +1,4 @@
+const modeBtn = document.getElementById("mode-btn");
 const colorOptions = Array.from(document.getElementsByClassName("color-option"));
 const color = document.getElementById("color");
 const lineWidth = document.getElementById("line-width");
@@ -7,6 +8,7 @@ canvas.width = 800;
 canvas.height= 800;
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
+let isFilling = false;
 
 function onMove(event) {
     if (isPainting) {
@@ -38,10 +40,29 @@ function onColorClick(event) {
     ctx.strokeStyle = ctx.fillStyle = color.value = colorValue;
 
 }
+
+function onModeClick() {
+    if(isFilling){
+        isFilling = false
+        modeBtn.innerText = "Fill"
+    } else { 
+        isFilling= true
+        modeBtn.innerText = "Draw"
+    }
+}
+
+function onCanvasClick() { 
+    if(isFilling) {
+        ctx.fillRect(0,0,800,800);
+    }
+}
+
+
 canvas.addEventListener("mousemove",onMove);
 canvas.addEventListener("mousedown",startPainting);
 canvas.addEventListener("mouseup",cancelPainting);
 canvas.addEventListener("mouseleave",cancelPainting);
+canvas.addEventListener("click", onCanvasClick);
 
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
@@ -51,3 +72,5 @@ colorOptions.forEach(color => color.addEventListener("click",onColorClick));
 //color.addEventListener("click", onColorClick);
 //}); 
 //원래 이거를 arrow function으로 쓴거임
+
+modeBtn.addEventListener("click",onModeClick);
