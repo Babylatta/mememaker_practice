@@ -73,8 +73,9 @@
     </div>
     <canvas></canvas>
     <div class="btns">
-      <span>Line Width</span>
+      <span class="nametagspan">📐 Line Width 📏</span>
       <input
+        class="rangestyle"
         id="line-width"
         type="range"
         min="1"
@@ -89,7 +90,29 @@
         🔗 Add photo
         <input type="file" accept="image/*" id="file"
       /></label>
+      <span class="nametagspan">🅰 Font Style 🅱</span>
+      <select id="font-select">
+        <option value="arial">Arial</option>
+        <option value="verdana">Verdana</option>
+        <option value="tahoma">Tahoma</option>
+        <option value="courier New">Courier New</option>
+        <option value="times New Roman">Times New Roman</option>
+      </select>
+      <span class="nametagspan">1️⃣ Font Size 🔟</span>
+      <input
+        class="rangestyle"
+        id="font-size"
+        type="range"
+        min="5"
+        max="100"
+        value="40"
+        step="0.5"
+      />
       <input type="text" placeholder="Add text here ... :)" id="text" />
+      <div id="stroke-fill_btns">
+        <button id="fill-text-btn">Fill Text</button>
+        <button id="stroke-text-btn">Stroke Text</button>
+      </div>
       <button id="save">💾 Save image</button>
     </div>
 

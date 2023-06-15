@@ -1,3 +1,7 @@
+const fillTextBtn = document.getElementById("fill-text-btn");
+const strokeTextBtn = document.getElementById("stroke-text-btn");
+const fontSelect = document.getElementById("font-select");
+const textSizeInput = document.getElementById("font-size");
 const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
@@ -21,6 +25,9 @@ ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
 
+let selectedFont = fontSelect.value;
+
+
 function onMove(event) {
     if (isPainting) {
         ctx.lineTo(event.offsetX,event.offsetY);
@@ -41,6 +48,7 @@ function cancelPainting(){
 function onLineWidthChange(event){
     ctx.lineWidth = event.target.value;
 }
+
 
 function onColorChange(event){
     ctx.strokeStyle = ctx.fillStyle = event.target.value;
@@ -93,15 +101,31 @@ function onFileChange(event) {
 
 function onDoubleClick(event) {
     const text = textInput.value;
+    const fontsize = textSizeInput.value;
+    const selectedFont = fontSelect.value;
     if (text !== ""){    
         ctx.save();
         ctx.lineWidth = 1;
-        ctx.font = "68px serif";
-        ctx.fillText(text, event.offsetX, event.offsetY);
+        ctx.font = `${fontsize}px ${selectedFont}`; //여기 이새끼부터 해야함
+        if (fillTextBtn.classList.contains('active')) {
+            ctx.fillText(text, event.offsetX, event.offsetY);
+          } else if (strokeTextBtn.classList.contains('active')) {
+            ctx.strokeText(text, event.offsetX, event.offsetY);
+          }
         ctx.restore();
     }
-
 }
+
+function onFillTextClick() {
+    fillTextBtn.classList.add('active');
+    strokeTextBtn.classList.remove('active');
+}
+
+function onStrokeTextClick(){
+    strokeTextBtn.classList.add('active');
+    fillTextBtn.classList.remove('active') 
+}
+
 
 function onSaveclick() {
     const url = canvas.toDataURL();
@@ -109,6 +133,10 @@ function onSaveclick() {
     a.href = url;
     a.download = "myDrawing.png";
     a.click();
+}
+
+function onFontChange() {
+    selectedFont = fontSelect.value;
 }
 
 canvas.addEventListener("dblclick", onDoubleClick);
@@ -132,3 +160,8 @@ destroyBtn.addEventListener("click",onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change",onFileChange);
 saveBtn.addEventListener("click", onSaveclick);
+fontSelect.addEventListener("change", onFontChange);
+fillTextBtn.addEventListener("click", onFillTextClick);
+strokeTextBtn.addEventListener("click", onStrokeTextClick);
+
+ 
